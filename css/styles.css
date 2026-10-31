@@ -1,0 +1,12 @@
+body { font-family: 'Inter', sans-serif; }
+.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+.leaflet-popup-content-wrapper { background: #1e293b; color: #f8fafc; border-radius: 12px; }
+.leaflet-popup-tip { background: #1e293b; }
+#simCanvas { touch-action: none; }
+@media print {
+  body * { visibility: hidden; }
+  #printable-ticket, #printable-ticket * { visibility: visible; }
+  #printable-ticket { position: absolute; left: 0; top: 0; width: 100%; color: #000; background: #fff; }
+}

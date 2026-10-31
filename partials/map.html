@@ -1,0 +1,28 @@
+        <!-- SECCIÓN 3: MAPA DE TALLERES -->
+        <section id="section-map" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-xl">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-map-location-dot text-amber-400"></i>
+                            Geolocalización de Talleres en la Región
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400">Encuentra maquileros, bordadores y confeccionistas en Orizaba, Córdoba, Ixtaczoquitlán, Nogales y Fortín.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-400">Filtrar Municipio:</span>
+                        <select id="map-municipio-filter" onchange="app.filterMapMarkers()" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200">
+                            <option value="ALL">Todos los Municipios</option>
+                            <option value="Orizaba">Orizaba</option>
+                            <option value="Córdoba">Córdoba</option>
+                            <option value="Ixtaczoquitlán">Ixtaczoquitlán</option>
+                            <option value="Nogales">Nogales</option>
+                            <option value="Fortín">Fortín</option>
+                            <option value="Río Blanco">Río Blanco</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="leaflet-map" class="w-full h-[500px] rounded-xl border border-slate-800 overflow-hidden shadow-inner z-10"></div>
+            </div>
+        </section>

@@ -1,0 +1,29 @@
+        <!-- SECCIÓN 5: MIS PEDIDOS -->
+        <section id="section-tracking" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 sm:p-8 shadow-2xl space-y-6">
+                <div class="border-b border-slate-800 pb-4">
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-truck-fast text-violet-400"></i>
+                        Mis Pedidos - Consulta y Rastreo Individual
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-400">Ingresa de forma exclusiva el número de rastreo de tu paquete para visualizar su estatus y progreso en tiempo real.</p>
+                </div>
+
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4 max-w-2xl mx-auto">
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                        <i class="fa-solid fa-barcode text-indigo-400 mr-1.5"></i> Ingresa tu Número de Rastreo / Folio de Pedido:
+                    </label>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-sm"></i>
+                            <input type="text" id="tracking-search-input" placeholder="Ej. TC-2026-9812" class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono uppercase">
+                        </div>
+                        <button onclick="app.executeOrderSearch()" class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs uppercase rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 whitespace-nowrap">
+                            <i class="fa-solid fa-search"></i> Buscar Pedido
+                        </button>
+                    </div>
+                </div>
+
+                <div id="tracking-display-area" class="space-y-6"></div>
+            </div>
+        </section>

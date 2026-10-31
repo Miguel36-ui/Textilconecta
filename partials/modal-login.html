@@ -1,0 +1,54 @@
+    <!-- MODAL DE ACCESO PARA CLIENTES, EMPRESAS Y SUPERADMIN -->
+    <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden p-6 space-y-5">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-lock text-indigo-400"></i>
+                    Iniciar Sesión en la Plataforma
+                </h3>
+                <button onclick="app.closeLoginModal()" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="app.handleLoginSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">Tipo de Cuenta / Rol *</label>
+                    <select id="login-role" onchange="app.updateLoginRoleFields()" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-semibold focus:border-indigo-500">
+                        <option value="client">Cliente</option>
+                        <option value="workshop">Empresa / Taller Afiliado (RFC)</option>
+                        <option value="admin">SuperAdministrador Central</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label id="login-username-label" for="login-username" class="block font-bold text-slate-300 mb-1">Correo electrónico / RFC *</label>
+                    <input type="text" id="login-username" required placeholder="Tu correo o RFC" autocomplete="username" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:border-indigo-500">
+                </div>
+
+                <div id="client-name-field" class="hidden">
+                    <label for="client-name" class="block font-bold text-slate-300 mb-1">Nombre completo *</label>
+                    <input type="text" id="client-name" autocomplete="name" placeholder="Tu nombre"
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:border-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">Contraseña *</label>
+                    <input type="password" id="login-password" required placeholder="••••••••" autocomplete="current-password" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:border-indigo-500">
+                </div>
+
+                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800/80 text-[11px] text-slate-400 space-y-1">
+                    <p id="login-help-text">Inicia sesión con tu correo y contraseña de cliente.</p>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="app.closeLoginModal()" class="px-4 py-2 text-slate-400 hover:text-white font-semibold">Cancelar</button>
+                    <button id="client-mode-toggle" type="button" onclick="app.toggleClientRegistrationMode()"
+                        class="hidden px-3 py-2 text-indigo-300 hover:text-indigo-200 font-semibold">Crear cuenta</button>
+                    <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white font-bold rounded-xl transition shadow-lg shadow-indigo-600/30">
+                        <span id="login-submit-label">Ingresar</span> <i class="fa-solid fa-right-to-bracket ml-1"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,194 @@
+<!-- SECCIÓN 2: SIMULADOR 2D (ACTUALIZADO CON RENDER DIVERSIFICADO DE PRENDAS) -->
+<section id="section-simulator" class="tab-content hidden space-y-6">
+    <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-xl">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-slate-800 pb-4">
+            <div>
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-pen-nib text-emerald-400"></i>
+                    Simulador 2D de Bordado & Estampado
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-400">Selecciona cualquier producto del catálogo y visualiza el
+                    modelo dinámico en vistas Frontal y Trasera.</p>
+            </div>
+
+            <div
+                class="flex flex-wrap items-center gap-3 bg-slate-950 p-2 rounded-xl border border-slate-800 w-full md:w-auto">
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Modelo de Ropa /
+                        Prenda:</label>
+                    <select id="sim-product-select" onchange="app.changeSimulatorProduct()"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-emerald-500">
+                    </select>
+                </div>
+                <div class="flex items-center gap-1 pt-3">
+                    <button id="view-front-btn" onclick="app.setSimulatorView('front')"
+                        class="px-3 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow">
+                        <i class="fa-solid fa-shirt mr-1"></i> Frontal
+                    </button>
+                    <button id="view-back-btn" onclick="app.setSimulatorView('back')"
+                        class="px-3 py-1.5 rounded-lg text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white">
+                        <i class="fa-solid fa-shirt mr-1 rotate-180"></i> Trasera
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div
+                class="lg:col-span-7 flex flex-col items-center bg-slate-950 p-6 rounded-2xl border border-slate-800 relative min-h-[460px]">
+                <span
+                    class="absolute top-4 left-4 bg-slate-800/80 text-xs px-2.5 py-1 rounded-md text-slate-300 font-mono"
+                    id="sim-view-badge">
+                    Producto: Playera Polo | Vista: Frontal
+                </span>
+
+                <div class="relative mt-8 w-full max-w-[400px] aspect-[20/23]">
+                    <canvas id="simCanvas" width="400" height="460"
+                        class="w-full h-full border border-slate-800/60 rounded-xl cursor-move shadow-inner bg-slate-900/60"></canvas>
+                </div>
+
+                <p class="text-[11px] text-slate-500 mt-3 text-center">
+                    <i class="fa-solid fa-hand-pointer text-indigo-400 mr-1"></i> Haz clic y arrastra sobre la prenda
+                    para ubicar tu logotipo en vivo.
+                </p>
+                <div class="w-full max-w-[400px] mt-2 flex items-center gap-3">
+                    <i class="fa-solid fa-magnifying-glass-minus text-slate-500 text-xs"></i>
+                    <input id="sim-zoom-range" type="range" min="100" max="160" step="5" value="120"
+                        oninput="app.setSimulatorZoom(this.value)"
+                        aria-label="Acercamiento de la prenda"
+                        class="w-full accent-indigo-500">
+                    <i class="fa-solid fa-magnifying-glass-plus text-indigo-400 text-xs"></i>
+                    <span id="sim-zoom-value" class="w-10 text-right text-xs font-bold text-indigo-300">120%</span>
+                </div>
+                <p class="text-[10px] text-slate-500">Acercamiento de vista; no cambia el tamaño de producción del logotipo.</p>
+            </div>
+
+            <div class="lg:col-span-5 space-y-5 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
+                <h3
+                    class="text-sm font-bold text-white uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2">
+                    Configuración del Logotipo</h3>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">1. Seleccionar o Cargar Logo</label>
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <label
+                            class="cursor-pointer flex items-center justify-center gap-2 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 p-2.5 rounded-lg text-xs font-semibold transition text-center">
+                            <i class="fa-solid fa-upload"></i> Subir Imagen
+                            <input type="file" id="logo-file-input" accept="image/*" class="hidden"
+                                onchange="app.handleLogoUpload(event)">
+                        </label>
+                        <button onclick="app.resetLogoPosition()"
+                            class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2.5 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-arrows-rotate mr-1"></i> Centrar Logo
+                        </button>
+                    </div>
+                    <span class="text-[11px] text-slate-400 block mb-1.5">O elige un Logo de Ejemplo:</span>
+                    <div class="flex gap-2">
+                        <button onclick="app.loadPresetLogo('shield')"
+                            class="flex-1 bg-slate-800 hover:bg-slate-700 p-2 rounded-lg text-xs text-slate-300 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-shield-halved text-amber-400"></i> Escudo
+                        </button>
+                        <button onclick="app.loadPresetLogo('company')"
+                            class="flex-1 bg-slate-800 hover:bg-slate-700 p-2 rounded-lg text-xs text-slate-300 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-building text-sky-400"></i> Corp
+                        </button>
+                        <button onclick="app.loadPresetLogo('eagle')"
+                            class="flex-1 bg-slate-800 hover:bg-slate-700 p-2 rounded-lg text-xs text-slate-300 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-feather text-emerald-400"></i> Águila
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-4 pt-2">
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold text-slate-300 mb-1">
+                            <span>Escala / Tamaño Logo</span>
+                            <span id="scale-val-txt" class="text-indigo-400">100%</span>
+                        </div>
+                        <input type="range" id="logo-scale-range" min="30" max="250" value="100"
+                            oninput="app.updateLogoTransform()"
+                            class="w-full accent-indigo-500 bg-slate-800 rounded-lg">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold text-slate-300 mb-1">
+                            <span>Rotación</span>
+                            <span id="rotate-val-txt" class="text-indigo-400">0°</span>
+                        </div>
+                        <input type="range" id="logo-rotate-range" min="-180" max="180" value="0"
+                            oninput="app.updateLogoTransform()"
+                            class="w-full accent-indigo-500 bg-slate-800 rounded-lg">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-2">Color de la prenda</label>
+                        <div class="flex flex-wrap gap-2 items-center">
+                            <!-- Colores básicos más usados -->
+                            <button onclick="app.setGarmentColor('#111827')" title="Negro" aria-label="Color Negro"
+                                class="w-7 h-7 rounded-full border-2 border-slate-600 hover:scale-110 hover:border-white transition shadow"
+                                style="background:#111827"></button>
+                            <button onclick="app.setGarmentColor('#f1f5f9')" title="Blanco" aria-label="Color Blanco"
+                                class="w-7 h-7 rounded-full border-2 border-slate-600 hover:scale-110 hover:border-white transition shadow"
+                                style="background:#f1f5f9"></button>
+
+                            <div class="w-px h-5 bg-slate-700 mx-1"></div> <!-- Separador visual -->
+
+                            <!-- Selector de color infinito -->
+                            <div class="relative w-8 h-8 rounded-full overflow-hidden border-2 border-dashed border-slate-400 hover:scale-110 hover:border-white transition cursor-pointer shadow-lg bg-gradient-to-tr from-rose-500 via-emerald-500 to-indigo-500"
+                                title="Paleta personalizada">
+                                <!-- El input real está invisible encima del gradiente -->
+                                <input type="color" oninput="app.setGarmentColor(this.value)" value="#3b82f6"
+                                    class="absolute -top-2 -left-2 w-16 h-16 cursor-pointer opacity-0">
+                            </div>
+                            <span class="text-[11px] text-slate-400 font-medium ml-1">Color libre</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-2">Zona de estampado</label>
+                        <div class="grid grid-cols-2 gap-2"><button onclick="app.setPrintZone('chest')"
+                                class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded-lg text-[11px] font-semibold transition">Pecho
+                                centro</button><button onclick="app.setPrintZone('left-chest')"
+                                class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded-lg text-[11px] font-semibold transition">Pecho
+                                izquierdo</button><button onclick="app.setPrintZone('back-top')"
+                                class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded-lg text-[11px] font-semibold transition">Espalda
+                                alta</button><button onclick="app.setPrintZone('back-center')"
+                                class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded-lg text-[11px] font-semibold transition">Espalda
+                                centro</button></div>
+                    </div>
+                </div>
+                <div class="pt-2 border-t border-slate-800 space-y-3">
+                    <label class="block text-xs font-semibold text-slate-300">Técnica de Personalización</label>
+                    <select id="technique-select" onchange="app.calculateEmbroiderEstimate()"
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200">
+                        <option value="Bordado Computarizado HD">Bordado Computarizado HD (Hilos Madeira/Poliéster)
+                        </option>
+                        <option value="Serigrafía Textil Plastisol">Serigrafía Textil High Density</option>
+                        <option value="Vinil Textil Importado">Vinil Textil Thermo-Press</option>
+                        <option value="Sublimación Digital Full Color">Sublimación Digital Tacto Cero</option>
+                    </select>
+
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs space-y-1.5">
+                        <div class="flex justify-between text-slate-400">
+                            <span>Estimado de Puntadas / Matriz:</span>
+                            <span id="stitch-count" class="font-bold text-slate-200">~6,800 puntadas</span>
+                        </div>
+                        <div class="flex justify-between text-slate-400">
+                            <span>Ponchado / Digitalización:</span>
+                            <span id="setup-cost" class="font-bold text-emerald-400">GRATIS (+50 pzs)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-[11px] text-slate-400 text-center">
+                    Al continuar, esta prenda y su diseño se agregarán a una cotización. El diseño se conservará en ese artículo del carrito.
+                </p>
+                <button onclick="app.saveSimulatorDesign()"
+                    class="w-full py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-calculator"></i> Cotizar esta prenda con mi diseño
+                </button>
+            </div>
+        </div>
+    </div>
+</section>

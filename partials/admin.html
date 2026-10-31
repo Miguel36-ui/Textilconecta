@@ -1,0 +1,159 @@
+        <!-- SECCIÓN 7: PANEL SUPERADMINISTRADOR (PROTEGIDO) -->
+        <section id="section-admin" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-2xl space-y-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30 uppercase tracking-widest mb-1">
+                            Administración Central
+                        </span>
+                        <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                            <i class="fa-solid fa-user-shield text-rose-400"></i>
+                            Panel SuperAdministrador TextilConecta
+                        </h2>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 gap-1 w-full md:w-auto overflow-x-auto">
+                            <button onclick="app.switchAdminTab('workshops')" id="admin-tab-workshops" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-600 text-white transition whitespace-nowrap">
+                                <i class="fa-solid fa-industry mr-1"></i> Talleres Registrados
+                            </button>
+                            <button onclick="app.switchAdminTab('reports')" id="admin-tab-reports" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+                                <i class="fa-solid fa-triangle-exclamation mr-1"></i> Quejas & Sanciones
+                            </button>
+                            <button onclick="app.switchAdminTab('orders')" id="admin-tab-orders" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+                                <i class="fa-solid fa-boxes-packing mr-1"></i> Control de Pedidos
+                            </button>
+                            <button onclick="app.switchAdminTab('simulator-requests')" id="admin-tab-simulator-requests" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+                                <i class="fa-solid fa-shirt mr-1"></i> Solicitudes de Simulador
+                                <span id="admin-simulator-pending-count" class="ml-1 rounded-full bg-amber-500/20 px-1.5 py-0.5 text-[10px] text-amber-300">0</span>
+                            </button>
+                        </div>
+                        <button onclick="app.logout()" class="px-3 py-1.5 bg-rose-600/30 hover:bg-rose-600/50 text-rose-200 rounded-lg text-xs font-bold transition border border-rose-500/30">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="admin-sub-workshops" class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-slate-200">Empresas Confeccionistas Afiliadas</h3>
+                        <span id="admin-workshop-count" class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full">0 Empresas</span>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead class="bg-slate-950 text-slate-400 font-semibold border-b border-slate-800 uppercase">
+                                <tr>
+                                    <th class="p-3">Empresa / Taller</th>
+                                    <th class="p-3">Usuario (RFC)</th>
+                                    <th class="p-3">Ubicación</th>
+                                    <th class="p-3">Estatus</th>
+                                    <th class="p-3">Quejas Acumuladas</th>
+                                    <th class="p-3 text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-workshops-table-body" class="divide-y divide-slate-800/60 text-slate-300"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="admin-sub-reports" class="hidden space-y-6">
+                    <div class="bg-rose-950/20 border border-rose-500/30 p-4 rounded-xl space-y-2">
+                        <h4 class="text-sm font-bold text-rose-300 flex items-center gap-2">
+                            <i class="fa-solid fa-gavel text-rose-400"></i>
+                            Regla de Penalización: Baja Automática tras 3 Quejas / Llamadas de Atención
+                        </h4>
+                        <p class="text-xs text-slate-300">
+                            Cualquier reporte por retrasos, mala calidad de bordado o incumplimiento incrementará el historial de infracciones. Al acumular <strong class="text-rose-400 font-extrabold">3 llamadas de atención</strong>, el sistema dará de baja automáticamente a la empresa de la red B2B.
+                        </p>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-slate-200">Historial de Sanciones e Incidencias Registradas</h3>
+                        <button onclick="app.openNewReportModal()" class="px-3 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition shadow">
+                            <i class="fa-solid fa-plus mr-1"></i> Levantar Queja / Llamada de Atención
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead class="bg-slate-950 text-slate-400 font-semibold border-b border-slate-800 uppercase">
+                                <tr>
+                                    <th class="p-3">Folio Incidencia</th>
+                                    <th class="p-3">Empresa Involucrada</th>
+                                    <th class="p-3">Cliente Afectado</th>
+                                    <th class="p-3">Motivo de la Queja</th>
+                                    <th class="p-3">Contador Quejas</th>
+                                    <th class="p-3 text-right">Acciones Admin</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-reports-table-body" class="divide-y divide-slate-800/60 text-slate-300"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="admin-sub-orders" class="hidden space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-200">Gestión de Etapas de Producción</h3>
+                            <p class="text-xs text-slate-400">Actualiza el progreso en tiempo real de los pedidos activos.</p>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead class="bg-slate-950 text-slate-400 font-semibold border-b border-slate-800 uppercase">
+                                <tr>
+                                    <th class="p-3">ID Pedido / Folio</th>
+                                    <th class="p-3">Cliente</th>
+                                    <th class="p-3">Taller Asignado</th>
+                                    <th class="p-3">Producto / Cant.</th>
+                                    <th class="p-3">Total MXN</th>
+                                    <th class="p-3">Cambiar Etapa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-orders-table-body" class="divide-y divide-slate-800/60 text-slate-300"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="admin-sub-simulator-requests" class="hidden space-y-4">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-200">Solicitudes para habilitar productos en el simulador 2D</h3>
+                        <p class="text-xs text-slate-400">Revisa la imagen y la información del producto. Al aprobarlo, los clientes podrán seleccionarlo en el simulador.</p>
+                    </div>
+                    <div id="admin-simulator-requests-list" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+        </section>
+        <div id="admin-edit-workshop-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+            <form onsubmit="app.saveWorkshopChanges(event)" class="bg-slate-900 border border-slate-700 w-full max-w-lg rounded-2xl p-6 space-y-4 shadow-2xl">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 class="font-bold text-white">Editar empresa afiliada</h3>
+                    <button type="button" onclick="app.closeEditWorkshopModal()" class="text-slate-400 hover:text-white" aria-label="Cerrar">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <input type="hidden" id="admin-edit-workshop-id">
+                <div>
+                    <label for="admin-edit-workshop-name" class="block text-xs font-semibold text-slate-300 mb-1">Nombre comercial</label>
+                    <input id="admin-edit-workshop-name" required maxlength="120" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label for="admin-edit-workshop-municipio" class="block text-xs font-semibold text-slate-300 mb-1">Municipio</label>
+                    <input id="admin-edit-workshop-municipio" required maxlength="80" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label for="admin-edit-workshop-phone" class="block text-xs font-semibold text-slate-300 mb-1">Teléfono</label>
+                    <input id="admin-edit-workshop-phone" required maxlength="30" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label for="admin-edit-workshop-address" class="block text-xs font-semibold text-slate-300 mb-1">Dirección</label>
+                    <input id="admin-edit-workshop-address" required maxlength="180" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="app.closeEditWorkshopModal()" class="px-4 py-2 text-sm text-slate-300 hover:text-white">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold">Guardar cambios</button>
+                </div>
+            </form>
+        </div>

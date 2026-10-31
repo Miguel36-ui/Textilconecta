@@ -1,0 +1,37 @@
+        <!-- SECCIÓN 1: CATÁLOGOS Y PRODUCTOS -->
+        <section id="section-catalog" class="tab-content block space-y-6">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-indigo-500/20 p-6 sm:p-10 shadow-2xl">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-3">
+                        <i class="fa-solid fa-industry mr-1"></i> Mercado Mayorista Altas Montañas
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight leading-tight mb-3">
+                        Conecta con los mejores talleres textiles de Orizaba y la región
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Cotiza directo con talleres locales, compara tarifas personalizadas por volumen, manda tus artículos al carrito o paga de una vez con tarjeta bancaria o SPEI.
+                    </p>
+                </div>
+                <div class="absolute -right-10 -bottom-10 opacity-15 pointer-events-none text-indigo-400 text-[180px]">
+                    <i class="fa-solid fa-scissors"></i>
+                </div>
+            </div>
+
+            <!-- FILTROS Y BÚSQUEDA -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-slate-900 p-4 rounded-xl border border-slate-800">
+                <div class="relative w-full sm:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-500 text-sm"></i>
+                    <input type="text" id="catalog-search" oninput="app.renderCatalog()" placeholder="Buscar prenda o producto..." class="w-full bg-slate-950 border border-slate-700 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                    <button onclick="app.filterCategory('ALL', this)" class="cat-filter font-medium text-xs px-3 py-1.5 rounded-lg bg-indigo-600 text-white">Todos</button>
+                    <button onclick="app.filterCategory('Industrial', this)" class="cat-filter font-medium text-xs px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Industrial</button>
+                    <button onclick="app.filterCategory('Corporativo', this)" class="cat-filter font-medium text-xs px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Corporativo</button>
+                    <button onclick="app.filterCategory('Gastronomia', this)" class="cat-filter font-medium text-xs px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Gastronomía</button>
+                    <button onclick="app.filterCategory('Deportivo', this)" class="cat-filter font-medium text-xs px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Deportivo/Escolar</button>
+                </div>
+            </div>
+
+            <!-- GRID DE PRODUCTOS -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+        </section>

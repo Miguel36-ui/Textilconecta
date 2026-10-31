@@ -1,0 +1,1 @@
+{ "name": "textilconecta", "private": true, "type": "module", "scripts": { "dev": "npx serve ." } }
